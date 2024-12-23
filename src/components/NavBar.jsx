@@ -16,6 +16,12 @@ function Navbar() {
         <li>
           <Link to="/about">About Us</Link>
         </li>
+        <li><
+            Link to="/submissions">Submissions</Link>
+        </li>
+        <li>
+            <Link to="/submit">Submit Story</Link>
+        </li>
       </ul>
     </nav>
   );

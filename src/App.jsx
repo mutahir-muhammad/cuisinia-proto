@@ -8,6 +8,8 @@ import RecipeCard from "./components/RecipeCard";
 import RecipeDetails from "./components/RecipeDetails";
 import RecipeGenerator from "./components/RecipeGenerator";
 import About from "./components/AboutUs";
+import Submissions from "./components/Submissions";
+import SubmitStory from "./components/SubmitStory";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 
 const searchApi = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
@@ -112,6 +114,8 @@ function App() {
           />
           <Route path="/recipe/:id" element={<RecipeDetails />} />
           <Route path="/ingredients" element={<RecipeGenerator />} />
+          <Route path="/submissions" element={<Submissions />} />
+          <Route path="/submit" element={<SubmitStory />} />
           <Route path="/about" element={<About />} />
         </Routes>
         <Footer />
