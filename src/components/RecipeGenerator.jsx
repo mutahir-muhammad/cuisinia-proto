@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ReciperGenerator = () => {
+const RecipeGenerator = () => {
   const [ingredients, setIngredients] = useState("");
   const [recipes, setRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -73,4 +73,4 @@ const ReciperGenerator = () => {
   );
 };
 
-export default ReciperGenerator;
+export default RecipeGenerator;
