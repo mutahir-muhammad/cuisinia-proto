@@ -8,6 +8,7 @@ import RecipeCard from "./components/RecipeCard";
 import RecipeDetails from "./components/RecipeDetails";
 import RecipeGenerator from "./components/RecipeGenerator";
 import About from "./components/AboutUs";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 
 const searchApi = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
 
@@ -66,7 +67,12 @@ function App() {
   };
 
   return (
-    <Router>
+    <header>
+      <SignedOut>
+        <SignInButton />
+      </SignedOut>
+      <SignedIn>
+      <Router>
       <div className="container">
         <Navbar />
         <Routes>
@@ -111,6 +117,8 @@ function App() {
         <Footer />
       </div>
     </Router>
+      </SignedIn>
+    </header>
   );
 }
 
