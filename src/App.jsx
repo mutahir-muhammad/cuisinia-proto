@@ -10,9 +10,8 @@ import RecipeGenerator from "./components/RecipeGenerator";
 import About from "./components/AboutUs";
 import Submissions from "./components/Submissions";
 import SubmitStory from "./components/SubmitStory";
+import SignOutBtn from "./components/SignOut"; // Import the SignOutButton
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
-
-const searchApi = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,18 +23,9 @@ function App() {
 
   const recipesPerPage = 10; // Number of recipes per page
 
-  const searchRecipes = async () => {
-    setIsLoading(true);
-    const url = `${searchApi}${query}&page=${page}`;
-    const res = await fetch(url);
-    const data = await res.json();
-    setRecipes(data.meals);
-    setIsLoading(false);
-  };
-
   const fetchAllRecipes = async () => {
     setIsLoading(true);
-    const res = await fetch(`${searchApi}a`);
+    const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=a`);
     const data = await res.json();
     setAllRecipes(data.meals);
     setIsLoading(false);
@@ -45,16 +35,6 @@ function App() {
   useEffect(() => {
     fetchAllRecipes();
   }, []);
-
-  useEffect(() => {
-    searchRecipes();
-  }, [page, query]);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setPage(1); // Reset to first page on new search
-    searchRecipes();
-  };
 
   const handleNextPage = () => {
     if (page < totalPages) {
@@ -74,53 +54,50 @@ function App() {
         <SignInButton />
       </SignedOut>
       <SignedIn>
-      <Router>
-      <div className="container">
-        <Navbar />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <SearchBar
-                  isLoading={isLoading}
-                  query={query}
-                  setQuery={setQuery}
-                  handleSubmit={handleSubmit}
-                />
-                <div className="recipes">
-                  <h2>All Recipes</h2>
-                  {allRecipes && allRecipes.length > 0 ? (
-                    allRecipes
-                      .slice((page - 1) * recipesPerPage, page * recipesPerPage)
-                      .map((recipe) => (
-                        <RecipeCard key={recipe.idMeal} recipe={recipe} />
-                      ))
-                  ) : (
-                    "Loading recipes..."
-                  )}
-                </div>
-                <div className="pagination">
-                  <button onClick={handlePrevPage} disabled={page === 1}>
-                    Previous
-                  </button>
-                  <span>Page {page} of {totalPages}</span>
-                  <button onClick={handleNextPage} disabled={page === totalPages}>
-                    Next
-                  </button>
-                </div>
-              </>
-            }
-          />
-          <Route path="/recipe/:id" element={<RecipeDetails />} />
-          <Route path="/ingredients" element={<RecipeGenerator />} />
-          <Route path="/submissions" element={<Submissions />} />
-          <Route path="/submit" element={<SubmitStory />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
-        <Footer />
-      </div>
-    </Router>
+        <Router>
+          <div className="container">
+            <Navbar />
+            <SignOutBtn /> {/* Include the SignOutButton */}
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <>
+                    <div className="recipes">
+                      <h2>All Recipes</h2>
+                      {allRecipes && allRecipes.length > 0 ? (
+                        allRecipes
+                          .slice((page - 1) * recipesPerPage, page * recipesPerPage)
+                          .map((recipe) => (
+                            <RecipeCard key={recipe.idMeal} recipe={recipe} />
+                          ))
+                      ) : (
+                        "Loading recipes..."
+                      )}
+                    </div>
+                    <div className="pagination">
+                      <button onClick={handlePrevPage} disabled={page === 1}>
+                        Previous
+                      </button>
+                      <span>
+                        Page {page} of {totalPages}
+                      </span>
+                      <button onClick={handleNextPage} disabled={page === totalPages}>
+                        Next
+                      </button>
+                    </div>
+                  </>
+                }
+              />
+              <Route path="/recipe/:id" element={<RecipeDetails />} />
+              <Route path="/ingredients" element={<RecipeGenerator />} />
+              <Route path="/submissions" element={<Submissions />} />
+              <Route path="/submit" element={<SubmitStory />} />
+              <Route path="/about" element={<About />} />
+            </Routes>
+            <Footer />
+          </div>
+        </Router>
       </SignedIn>
     </header>
   );

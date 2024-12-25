@@ -10,10 +10,16 @@ function About() {
         recipes and help them explore the joy of cooking. Whether you're a seasoned
         chef or just starting, we've got something for everyone.
       </p>
+      <br />
       <p>
         From classic dishes to creative new recipes, Cuisinia is here to make
         cooking fun and accessible for all. Join us on this culinary journey!
       </p>
+      <br />
+      <p>
+       Built by Mutahir, Afzaal and Ashir.
+      </p>
+      <br />
     </div>
   );
 }

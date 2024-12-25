@@ -1,0 +1,15 @@
+.sign-out-btn {
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 10px 0;
+  }
+  
+  .sign-out-btn:hover {
+    background-color: #d9363e;
+  }
+  
