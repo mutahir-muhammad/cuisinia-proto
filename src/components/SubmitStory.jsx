@@ -5,18 +5,13 @@ const SubmitStory = () => {
   const [userName, setUserName] = useState("");
   const [submissionType, setSubmissionType] = useState("review");
   const [content, setContent] = useState("");
-  const [submissions, setSubmissions] = useState([]);
+  const [error, setError] = useState("");
 
-  const backendUrl = "http://localhost:5000"; // Backend URL
+  const backendUrl = "http://localhost:5000";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const newSubmission = {
-      userName,
-      submissionType,
-      content,
-    };
+    const newSubmission = { userName, submissionType, content };
 
     try {
       const response = await fetch(`${backendUrl}/submit`, {
@@ -32,25 +27,13 @@ const SubmitStory = () => {
         setUserName("");
         setSubmissionType("review");
         setContent("");
-        fetchSubmissions(); // Refresh the submissions list
       } else {
         const errorData = await response.json();
-        alert(`Failed to save submission: ${errorData.error}`);
+        setError(errorData.error || "Failed to save submission");
       }
     } catch (err) {
       console.error(err);
-      alert("An error occurred while saving your submission!");
-    }
-  };
-
-  const fetchSubmissions = async () => {
-    try {
-      const response = await fetch(`${backendUrl}/submissions`);
-      const data = await response.json();
-      setSubmissions(data);
-    } catch (err) {
-      console.error(err);
-      alert("An error occurred while fetching submissions!");
+      setError("An error occurred while saving your submission.");
     }
   };
 
@@ -58,6 +41,7 @@ const SubmitStory = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <h2>Submit Your Story or Review</h2>
+        {error && <p style={{ color: "red" }}>{error}</p>}
         <input
           type="text"
           placeholder="Your Name"
